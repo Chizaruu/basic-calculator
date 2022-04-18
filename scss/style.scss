@@ -1,0 +1,113 @@
+.calculator {
+    width: 25%;
+    height: 50em;
+    margin: 0 auto;
+    display: grid;
+    grid-template-areas:
+        "display display display display"
+        "clear change-sign divide multiply"
+        "seven eight nine subtract"
+        "four five six add"
+        "one two three equals"
+        "zero zero dot equals";
+    grid-gap: 10px;
+    background-color: #2f2b2a;
+    padding: 10px;
+}
+
+h1 {
+    text-align: center;
+}
+
+#display {
+    grid-area: display;
+    font-size: 2em;
+    text-align: right;
+    color: black;
+    background-color: #e7d5c7;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#clear {
+    grid-area: clear;
+    background-color: red;
+}
+
+#change-sign {
+    grid-area: change-sign;
+}
+
+#divide {
+    grid-area: divide;
+}
+
+#multiply {
+    grid-area: multiply;
+}
+
+#subtract {
+    grid-area: subtract;
+}
+
+#add {
+    grid-area: add;
+    background-color: blue;
+}
+
+#equals {
+    grid-area: equals;
+}
+
+#zero {
+    grid-area: zero;
+}
+
+#one {
+    grid-area: one;
+}
+
+#two {
+    grid-area: two;
+}
+
+#three {
+    grid-area: three;
+}
+
+#four {
+    grid-area: four;
+}
+
+#five {
+    grid-area: five;
+}
+
+#six {
+    grid-area: six;
+}
+
+#seven {
+    grid-area: seven;
+}
+
+#eight {
+    grid-area: eight;
+}
+
+#nine {
+    grid-area: nine;
+}
+
+#dot {
+    grid-area: dot;
+
+    p {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        display: flex;
+        align-items: end;
+        justify-content: center;
+    }
+}
