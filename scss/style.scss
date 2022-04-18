@@ -1,8 +1,16 @@
+@use "mixins"as m;
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+}
+
 .calculator {
-    width: 25%;
-    height: 50em;
     margin: 0 auto;
     display: grid;
+    justify-content: center;
     grid-template-areas:
         "display display display display"
         "clear change-sign divide multiply"
@@ -13,6 +21,8 @@
     grid-gap: 10px;
     background-color: #2f2b2a;
     padding: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
 }
 
 h1 {
@@ -20,13 +30,13 @@ h1 {
 }
 
 #display {
+    min-width: 0;
     grid-area: display;
     font-size: 2em;
     text-align: right;
     color: black;
     background-color: #e7d5c7;
     padding: 10px;
-    border-radius: 5px;
 }
 
 #clear {
@@ -59,55 +69,52 @@ h1 {
     grid-area: equals;
 }
 
-#zero {
+#num0 {
     grid-area: zero;
 }
 
-#one {
+#num1 {
     grid-area: one;
 }
 
-#two {
+#num2 {
     grid-area: two;
 }
 
-#three {
+#num3 {
     grid-area: three;
 }
 
-#four {
+#num4 {
     grid-area: four;
 }
 
-#five {
+#num5 {
     grid-area: five;
 }
 
-#six {
+#num6 {
     grid-area: six;
 }
 
-#seven {
+#num7 {
     grid-area: seven;
 }
 
-#eight {
+#num8 {
     grid-area: eight;
 }
 
-#nine {
+#num9 {
     grid-area: nine;
 }
 
 #dot {
     grid-area: dot;
-
-    p {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        display: flex;
-        align-items: end;
-        justify-content: center;
-    }
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: center;
 }
