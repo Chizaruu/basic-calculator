@@ -6,7 +6,7 @@ const display = document.getElementById('display');
 
 let firstNumber = 0;
 let secondNumber = 0;
-let operator = '';
+let storedOperator = '';
 
 /*
     Calculator logic
@@ -16,6 +16,7 @@ const addition = (a, b) => a + b;
 const subtraction = (a, b) => a - b;
 const multiplication = (a, b) => a * b;
 const division = (a, b) => a / b;
+
 
 const operation = (a, b, operator) => {
     a = parseFloat(a);
@@ -34,7 +35,10 @@ const operation = (a, b, operator) => {
     }
 }
 
-const checkOperation = () => {
+
+const checkOperation = (operator) => {
+    storedOperator = operator;
+
     if (firstNumber !== 0 && secondNumber !== 0) {
         let result = operation(firstNumber, secondNumber, operator);
         display.value = result;
@@ -50,26 +54,29 @@ const checkOperation = () => {
     }
 }
 
+
 const clear = () => {
     display.value = 0;
     firstNumber = 0;
     secondNumber = 0;
 }
 
+
 const calculate = () => {
     if (firstNumber !== 0 && secondNumber !== 0) {
-        let result = operation(firstNumber, secondNumber, operator);
+        let result = operation(firstNumber, secondNumber, storedOperator);
         display.value = result;
         firstNumber = result;
     } else if (firstNumber !== 0) {
         secondNumber = display.value;
-        let result = operation(firstNumber, secondNumber, operator);
+        let result = operation(firstNumber, secondNumber, storedOperator);
         display.value = result;
         firstNumber = result;
     } else {
         return;
     }
 }
+
 
 const addNumber = (number) => {
     if (display.value === '0') {
@@ -79,19 +86,30 @@ const addNumber = (number) => {
     }
 }
 
+
+const addDecimal = () => {
+    if (display.innerHTML.indexOf('.') === -1) {
+        display.innerHTML += '.';
+    }
+}
+
+
+const positiveNegative = () => {
+    if (display.value !== '0') {
+        display.value = display.value * -1;
+    }
+}
+
 /* 
     Button click events
 */
 
 const numbers = document.querySelectorAll('.number');
-numbers.forEach(number => number.addEventListener('click', () => addNumber(number.innerHTML)));
+numbers.forEach(number => number.addEventListener('click', addNumber(number.innerHTML)));
 
 
 const operators = document.querySelectorAll('.operator');
-operators.forEach(operator => operator.addEventListener('click', () => {
-    operator = operator.innerHTML;
-    checkOperation();
-}));
+operators.forEach(operator => operator.addEventListener('click', checkOperation(operator.innerHTML)));
 
 
 const clearButton = document.getElementById('clear');
@@ -103,16 +121,8 @@ equals.addEventListener('click', calculate);
 
 
 const decimal = document.getElementById('decimal');
-decimal.addEventListener('click', () => {
-    if (display.value.indexOf('.') === -1) {
-        display.value += '.';
-    }
-});
+decimal.addEventListener('click', addDecimal);
 
 
 const changeSign = document.getElementById('change-sign');
-changeSign.addEventListener('click', () => {
-    if (display.value !== '0') {
-        display.value = display.value * -1;
-    }
-});
+changeSign.addEventListener('click', positiveNegative);
