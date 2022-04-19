@@ -17,7 +17,7 @@ main {
         "seven eight nine subtract"
         "four five six add"
         "one two three equals"
-        "zero zero dot equals";
+        "zero zero decimal equals";
     grid-gap: 10px;
     background-color: #2f2b2a;
     padding: 10px;
@@ -109,8 +109,8 @@ h1 {
     grid-area: nine;
 }
 
-#dot {
-    grid-area: dot;
+#decimal {
+    grid-area: decimal;
     margin: 0;
     padding: 0;
     height: 100%;
