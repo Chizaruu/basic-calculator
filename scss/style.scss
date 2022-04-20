@@ -13,7 +13,7 @@ main {
     justify-content: center;
     grid-template-areas:
         "display display display display"
-        "clear change-sign divide multiply"
+        "clear positive-negative divide multiply"
         "seven eight nine subtract"
         "four five six add"
         "one two three equals"
@@ -44,8 +44,8 @@ h1 {
     background-color: red;
 }
 
-#change-sign {
-    grid-area: change-sign;
+#positive-negative {
+    grid-area: positive-negative;
 }
 
 #divide {

@@ -9,74 +9,8 @@ let secondNumber = 0;
 let storedOperator = '';
 
 /*
-    Calculator logic
+    Display logic
 */
-
-const addition = (a, b) => a + b;
-const subtraction = (a, b) => a - b;
-const multiplication = (a, b) => a * b;
-const division = (a, b) => a / b;
-
-
-const operation = (a, b, operator) => {
-    a = parseFloat(a);
-    b = parseFloat(b);
-    switch (operator) {
-        case '+':
-            return addition(a, b);
-        case '-':
-            return subtraction(a, b);
-        case '*':
-            return multiplication(a, b);
-        case '/':
-            return division(a, b);
-        default:
-            return 'Invalid operator';
-    }
-}
-
-
-const checkOperation = (operator) => {
-    storedOperator = operator;
-
-    if (firstNumber !== 0 && secondNumber !== 0) {
-        let result = operation(firstNumber, secondNumber, operator);
-        display.value = result;
-        firstNumber = result;
-        secondNumber = 0;
-    } else {
-        if (firstNumber === 0) {
-            firstNumber = display.value;
-            display.value = 0;
-        } else {
-            secondNumber = display.value;
-        }
-    }
-}
-
-
-const clear = () => {
-    display.value = 0;
-    firstNumber = 0;
-    secondNumber = 0;
-}
-
-
-const calculate = () => {
-    if (firstNumber !== 0 && secondNumber !== 0) {
-        let result = operation(firstNumber, secondNumber, storedOperator);
-        display.value = result;
-        firstNumber = result;
-    } else if (firstNumber !== 0) {
-        secondNumber = display.value;
-        let result = operation(firstNumber, secondNumber, storedOperator);
-        display.value = result;
-        firstNumber = result;
-    } else {
-        return;
-    }
-}
-
 
 const addNumber = (number) => {
     if (display.value === '0') {
@@ -86,13 +20,11 @@ const addNumber = (number) => {
     }
 }
 
-
 const addDecimal = () => {
-    if (display.innerHTML.indexOf('.') === -1) {
-        display.innerHTML += '.';
+    if (display.value.indexOf('.') === -1) {
+        display.value += '.';
     }
 }
-
 
 const positiveNegative = () => {
     if (display.value !== '0') {
@@ -100,29 +32,117 @@ const positiveNegative = () => {
     }
 }
 
-/* 
-    Button click events
+/*
+    Calculator logic
+*/
+
+const addition = (a, b) => a + b;
+const subtraction = (a, b) => a - b;
+const multiplication = (a, b) => a * b;
+const division = (a, b) => a / b;
+
+/*
+    Clear logic
+*/
+
+const clearDisplay = () => {
+    display.value = 0;
+}
+
+const clearAll = () => {
+    display.value = 0;
+    firstNumber = 0;
+    secondNumber = 0;
+}
+
+/*
+    Operator logic
+*/
+
+const add = () => {
+    firstNumber = parseFloat(display.value);
+    storedOperator = '+';
+    clearDisplay();
+}
+
+const subtract = () => {
+    firstNumber = parseFloat(display.value);
+    storedOperator = '-';
+    clearDisplay();
+}
+
+const multiply = () => {
+    firstNumber = parseFloat(display.value);
+    storedOperator = '*';
+    clearDisplay();
+}
+
+const divide = () => {
+    firstNumber = parseFloat(display.value);
+    storedOperator = '/';
+    clearDisplay();
+}
+
+const equals = () => {
+    secondNumber = parseFloat(display.value);
+    switch (storedOperator) {
+        case '+':
+            display.value = addition(firstNumber, secondNumber);
+            break;
+        case '-':
+            display.value = subtraction(firstNumber, secondNumber);
+            break;
+        case '*':
+            display.value = multiplication(firstNumber, secondNumber);
+            break;
+        case '/':
+            display.value = division(firstNumber, secondNumber);
+            break;
+        default:
+            break;
+    }
+
+    // console.log(firstNumber, secondNumber, storedOperator);
+    // console.log(display.value);
+}
+
+const checkOperator = (operator) => {
+    switch (operator) {
+        case '+':
+            add();
+            break;
+        case '-':
+            subtract();
+            break;
+        case '*':
+            multiply();
+            break;
+        case '/':
+            divide();
+            break;
+        case '=':
+            equals();
+            break;
+        default:
+            break;
+    }
+}
+
+/*
+    Event listeners
 */
 
 const numbers = document.querySelectorAll('.number');
-numbers.forEach(number => number.addEventListener('click', addNumber(number.innerHTML)));
-
+numbers.forEach(number => number.addEventListener('click', () => addNumber(number.innerHTML)));
 
 const operators = document.querySelectorAll('.operator');
-operators.forEach(operator => operator.addEventListener('click', checkOperation(operator.innerHTML)));
+operators.forEach(operator => operator.addEventListener('click', () => checkOperator(operator.innerHTML)));
 
+const clear = document.querySelector('#clear');
+clear.addEventListener('click', clearAll);
 
-const clearButton = document.getElementById('clear');
-clearButton.addEventListener('click', clear);
-
-
-const equals = document.getElementById('equals');
-equals.addEventListener('click', calculate);
-
-
-const decimal = document.getElementById('decimal');
+const decimal = document.querySelector('#decimal');
 decimal.addEventListener('click', addDecimal);
 
-
-const changeSign = document.getElementById('change-sign');
-changeSign.addEventListener('click', positiveNegative);
+const positiveNegativeButton = document.querySelector('#positive-negative');
+positiveNegativeButton.addEventListener('click', positiveNegative);
