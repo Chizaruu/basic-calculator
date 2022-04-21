@@ -1,4 +1,3 @@
 # basic-calculator
 
-## The calculator
-![image](images/calculator.png)
+Click [here](https://chizaruu.github.io/basic-calculator/) to use the calculator.
