@@ -66,6 +66,7 @@ const clearDisplay = () => {
 const clearAll = () => {
     firstNumber = 0;
     secondNumber = 0;
+    storedOperator = '';
     clearDisplay();
     setNumberFontSize();
 }
@@ -96,8 +97,6 @@ const equals = () => {
             break;
     }
 
-    //console.log(firstNumber, secondNumber, storedOperator);
-    //console.log(display.value);
     firstNumber = parseFloat(display.value);
 }
 
@@ -116,9 +115,12 @@ const useOperator = (operator) => {
             clearAll();
             break;
         default:
+            if (firstNumber === 0)
+                firstNumber = parseFloat(display.value);
+            if (secondNumber !== 0)
+                secondNumber = 0;
+
             storedOperator = operator;
-            firstNumber = parseFloat(display.value);
-            secondNumber = 0;
             clearDisplay();
             break;
     }
