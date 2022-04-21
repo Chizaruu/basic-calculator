@@ -13,7 +13,7 @@ let storedOperator = '';
 */
 
 const hasMaxLength = () => {
-    if (display.value.length > 16) {
+    if (display.innerHTML.length > 16) {
         return true;
     }
 
@@ -23,24 +23,24 @@ const hasMaxLength = () => {
 const addNumber = (number) => {
     if (hasMaxLength()) return;
 
-    if (display.value === '0') {
-        display.value = number;
+    if (display.innerHTML === '0') {
+        display.innerHTML = number;
     } else {
-        display.value += number;
+        display.innerHTML += number;
     }
 }
 
 const addDecimal = () => {
     if (hasMaxLength()) return;
 
-    if (display.value.indexOf('.') === -1) {
-        display.value += '.';
+    if (display.innerHTML.indexOf('.') === -1) {
+        display.innerHTML += '.';
     }
 }
 
 const positiveNegative = () => {
-    if (display.value !== '0') {
-        display.value = display.value * -1;
+    if (display.innerHTML !== '0') {
+        display.innerHTML = display.innerHTML * -1;
     }
 }
 
@@ -54,7 +54,7 @@ const multiplication = (a, b) => a * b;
 const division = (a, b) => a / b;
 const percent = (a, b) => a * b / 100;
 const reciprocal = (a) => 1 / a;
-const sqaure = (a) => a * a;
+const square = (a) => a * a;
 const squareRoot = (a) => Math.sqrt(a);
 
 
@@ -63,7 +63,7 @@ const squareRoot = (a) => Math.sqrt(a);
 */
 
 const clearEntry = () => {
-    display.value = 0;
+    display.innerHTML = 0;
 }
 
 const clearAll = () => {
@@ -87,34 +87,34 @@ const hasFirstNumber = () => {
 
 const equals = () => {
     if (secondNumber === 0) {
-        secondNumber = parseFloat(display.value);
+        secondNumber = parseFloat(display.innerHTML);
     }
 
     switch (storedOperator) {
         case '+':
-            display.value = addition(firstNumber, secondNumber);
+            display.innerHTML = addition(firstNumber, secondNumber);
             break;
         case '-':
-            display.value = subtraction(firstNumber, secondNumber);
+            display.innerHTML = subtraction(firstNumber, secondNumber);
             break;
         case '*':
-            display.value = multiplication(firstNumber, secondNumber);
+            display.innerHTML = multiplication(firstNumber, secondNumber);
             break;
         case '/':
-            display.value = division(firstNumber, secondNumber);
+            display.innerHTML = division(firstNumber, secondNumber);
             break;
         default:
             break;
     }
 
-    firstNumber = parseFloat(display.value);
+    firstNumber = parseFloat(display.innerHTML);
 }
 
 const useOperator = (operator) => {
     switch (operator) {
         case '%':
-            if (!hasFirstNumber()) return;
-            display.value = percent(firstNumber, parseFloat(display.value));
+            if (hasFirstNumber()) return;
+            display.innerHTML = percent(firstNumber, parseFloat(display.innerHTML));
             break;
         case 'CE':
             clearEntry();
@@ -123,15 +123,18 @@ const useOperator = (operator) => {
             clearAll();
             break;
         case 'B':
-            if (display.value !== "0") {
-                display.value = display.value.slice(0, -1);
+            if (display.innerHTML !== "0") {
+                display.innerHTML = display.innerHTML.slice(0, -1);
             }
             break;
         case '1/x':
-            display.value = reciprocal(parseFloat(display.value));
+            display.innerHTML = reciprocal(parseFloat(display.innerHTML));
+            break;
+        case 'x²':
+            display.innerHTML = square(parseFloat(display.innerHTML));
             break;
         case '√':
-            display.value = squareRoot(parseFloat(display.value));
+            display.innerHTML = squareRoot(parseFloat(display.innerHTML));
         case '+/-':
             positiveNegative();
             break;
@@ -143,7 +146,7 @@ const useOperator = (operator) => {
             break;
         default:
             if (hasFirstNumber())
-                firstNumber = parseFloat(display.value);
+                firstNumber = parseFloat(display.innerHTML);
             if (secondNumber !== 0)
                 secondNumber = 0;
 
@@ -157,8 +160,8 @@ const useOperator = (operator) => {
     Event listeners
 */
 
-const numbers = document.querySelectorAll('.number');
+const numbers = document.querySelectorAll('.calculator__number');
 numbers.forEach(number => number.addEventListener('click', () => addNumber(number.innerHTML)));
 
-const operators = document.querySelectorAll('.operator');
+const operators = document.querySelectorAll('.calculator__operator');
 operators.forEach(operator => operator.addEventListener('click', () => useOperator(operator.innerHTML)));

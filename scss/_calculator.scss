@@ -1,3 +1,15 @@
+@mixin white-cause-microsoft {
+    background-color: white;
+
+    &:hover {
+        background-color: #e6e6e6;
+    }
+}
+
+button {
+    cursor: pointer;
+}
+
 .calculator {
     margin: 0 auto;
     display: grid;
@@ -7,60 +19,35 @@
         "display display display display"
         "modulos clear-entry clear-all backspace"
         "reciprocal square square-root divide"
-        "seven eight nine multiply"
-        "four five six subtract"
-        "one two three addition"
-        "positive-negative zero decimal equals";
+        "num7 num8 num9 multiply"
+        "num4 num5 num6 subtract"
+        "num1 num2 num3 addition"
+        "positive-negative num0 decimal equals";
     grid-gap: 1px;
     background-color: #e6e6e6;
     padding: 3px;
     grid-template-columns: repeat(4, 7.5em);
     grid-template-rows: repeat(8, 3.9em);
-}
 
-.calculator__key {
-    cursor: pointer;
-}
+    &__operator {
+        background-color: #f3f3f3;
+        font-size: 1.3em;
 
-@mixin name-key($name) {
-    &.calculator__key--#{$name} {
-        background-color: #e6e6e6;
-        color: #000;
+        &__special {
+            font-size: 0.9em;
+        }
+
+        &:hover {
+            background-color: #e6e6e6;
+        }
+    }
+
+    &__number {
         font-weight: bold;
-        font-size: 1.5em;
-        text-align: center;
-        padding: 0.5em;
-        border-radius: 0.5em;
-        border: 1px solid #000;
+        font-size: 1em;
+
+        @include white-cause-microsoft;
     }
-}
-
-.operator {
-    background-color: #f3f3f3;
-    font-size: 1.3em;
-
-    &__special {
-        font-size: 0.9em;
-    }
-
-    &:hover {
-        background-color: #e6e6e6;
-    }
-}
-
-@mixin white-cause-microsoft {
-    background-color: white;
-
-    &:hover {
-        background-color: #e6e6e6;
-    }
-}
-
-.number {
-    font-weight: bold;
-    font-size: 1em;
-
-    @include white-cause-microsoft;
 }
 
 #display {
@@ -68,9 +55,9 @@
     grid-area: display;
     background-color: #e2e2e2;
     text-align: right;
-    font-size: 2.5em;
+    font-size: 3em;
     padding-top: 50px;
-    font-weight: 500;
+    font-weight: 400;
 }
 
 #clear-all {
@@ -120,6 +107,10 @@
 #equals {
     grid-area: equals;
     background-color: #b6a790;
+
+    &:hover {
+        background-color: #a69680;
+    }
 }
 
 #positive-negative {
@@ -132,42 +123,8 @@
     @include white-cause-microsoft
 }
 
-#num0 {
-    grid-area: zero;
-}
-
-#num1 {
-    grid-area: one;
-}
-
-#num2 {
-    grid-area: two;
-}
-
-#num3 {
-    grid-area: three;
-}
-
-#num4 {
-    grid-area: four;
-}
-
-#num5 {
-    grid-area: five;
-}
-
-#num6 {
-    grid-area: six;
-}
-
-#num7 {
-    grid-area: seven;
-}
-
-#num8 {
-    grid-area: eight;
-}
-
-#num9 {
-    grid-area: nine;
+@for $i from 0 through 9 {
+    #num#{$i} {
+        grid-area: num#{$i};
+    }
 }
