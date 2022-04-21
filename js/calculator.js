@@ -12,29 +12,27 @@ let storedOperator = '';
     Display logic
 */
 
-const setNumberFontSize = () => {
-    if (display.value.length > 9) {
-        display.style.fontSize = '1.5vw';
-    } else {
-        display.style.fontSize = '4vw';
+const hasMaxLength = () => {
+    if (display.value.length > 16) {
+        return true;
     }
+
+    return false;
 }
 
 const addNumber = (number) => {
-    if (display.value.length > 15) {
-        return;
-    }
+    if (hasMaxLength()) return;
 
     if (display.value === '0') {
         display.value = number;
     } else {
         display.value += number;
     }
-
-    setNumberFontSize();
 }
 
 const addDecimal = () => {
+    if (hasMaxLength()) return;
+
     if (display.value.indexOf('.') === -1) {
         display.value += '.';
     }
@@ -54,12 +52,17 @@ const addition = (a, b) => a + b;
 const subtraction = (a, b) => a - b;
 const multiplication = (a, b) => a * b;
 const division = (a, b) => a / b;
+const percent = (a, b) => a * b / 100;
+const reciprocal = (a) => 1 / a;
+const sqaure = (a) => a * a;
+const squareRoot = (a) => Math.sqrt(a);
+
 
 /*
     Clear logic
 */
 
-const clearDisplay = () => {
+const clearEntry = () => {
     display.value = 0;
 }
 
@@ -67,13 +70,20 @@ const clearAll = () => {
     firstNumber = 0;
     secondNumber = 0;
     storedOperator = '';
-    clearDisplay();
-    setNumberFontSize();
+    clearEntry();
 }
 
 /*
     Operator logic
 */
+const hasFirstNumber = () => {
+    if (firstNumber !== 0) {
+        return false;
+    }
+
+    return true;
+}
+
 
 const equals = () => {
     if (secondNumber === 0) {
@@ -102,29 +112,45 @@ const equals = () => {
 
 const useOperator = (operator) => {
     switch (operator) {
-        case '=':
-            equals();
+        case '%':
+            if (!hasFirstNumber()) return;
+            display.value = percent(firstNumber, parseFloat(display.value));
             break;
+        case 'CE':
+            clearEntry();
+            break;
+        case 'C':
+            clearAll();
+            break;
+        case 'B':
+            if (display.value !== "0") {
+                display.value = display.value.slice(0, -1);
+            }
+            break;
+        case '1/x':
+            display.value = reciprocal(parseFloat(display.value));
+            break;
+        case '√':
+            display.value = squareRoot(parseFloat(display.value));
         case '+/-':
             positiveNegative();
             break;
         case '.':
             addDecimal();
             break;
-        case 'C':
-            clearAll();
+        case '=':
+            equals();
             break;
         default:
-            if (firstNumber === 0)
+            if (hasFirstNumber())
                 firstNumber = parseFloat(display.value);
             if (secondNumber !== 0)
                 secondNumber = 0;
 
             storedOperator = operator;
-            clearDisplay();
+            clearEntry();
             break;
     }
-    setNumberFontSize();
 }
 
 /*
