@@ -12,6 +12,15 @@ let storedOperator = '';
     Display logic
 */
 
+const setFontSize = () => {
+    if (display.innerHTML.length > 16) {
+        display.style.fontSize = '2.4em';
+    } else {
+        display.style.fontSize = '3em';
+    }
+}
+
+
 const hasMaxLength = () => {
     if (display.innerHTML.length > 16) {
         return true;
@@ -108,6 +117,7 @@ const equals = () => {
     }
 
     firstNumber = parseFloat(display.innerHTML);
+    setFontSize();
 }
 
 const useOperator = (operator) => {
@@ -154,6 +164,7 @@ const useOperator = (operator) => {
             clearEntry();
             break;
     }
+    setFontSize();
 }
 
 /*
