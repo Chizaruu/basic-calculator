@@ -12,12 +12,26 @@ let storedOperator = '';
     Display logic
 */
 
+const setNumberFontSize = () => {
+    if (display.value.length > 9) {
+        display.style.fontSize = '1.5vw';
+    } else {
+        display.style.fontSize = '4vw';
+    }
+}
+
 const addNumber = (number) => {
+    if (display.value.length > 15) {
+        return;
+    }
+
     if (display.value === '0') {
         display.value = number;
     } else {
         display.value += number;
     }
+
+    setNumberFontSize();
 }
 
 const addDecimal = () => {
@@ -50,41 +64,21 @@ const clearDisplay = () => {
 }
 
 const clearAll = () => {
-    display.value = 0;
     firstNumber = 0;
     secondNumber = 0;
+    clearDisplay();
+    setNumberFontSize();
 }
 
 /*
     Operator logic
 */
 
-const add = () => {
-    firstNumber = parseFloat(display.value);
-    storedOperator = '+';
-    clearDisplay();
-}
-
-const subtract = () => {
-    firstNumber = parseFloat(display.value);
-    storedOperator = '-';
-    clearDisplay();
-}
-
-const multiply = () => {
-    firstNumber = parseFloat(display.value);
-    storedOperator = '*';
-    clearDisplay();
-}
-
-const divide = () => {
-    firstNumber = parseFloat(display.value);
-    storedOperator = '/';
-    clearDisplay();
-}
-
 const equals = () => {
-    secondNumber = parseFloat(display.value);
+    if (secondNumber === 0) {
+        secondNumber = parseFloat(display.value);
+    }
+
     switch (storedOperator) {
         case '+':
             display.value = addition(firstNumber, secondNumber);
@@ -102,30 +96,33 @@ const equals = () => {
             break;
     }
 
-    // console.log(firstNumber, secondNumber, storedOperator);
-    // console.log(display.value);
+    //console.log(firstNumber, secondNumber, storedOperator);
+    //console.log(display.value);
+    firstNumber = parseFloat(display.value);
 }
 
-const checkOperator = (operator) => {
+const useOperator = (operator) => {
     switch (operator) {
-        case '+':
-            add();
-            break;
-        case '-':
-            subtract();
-            break;
-        case '*':
-            multiply();
-            break;
-        case '/':
-            divide();
-            break;
         case '=':
             equals();
             break;
+        case '+/-':
+            positiveNegative();
+            break;
+        case '.':
+            addDecimal();
+            break;
+        case 'C':
+            clearAll();
+            break;
         default:
+            storedOperator = operator;
+            firstNumber = parseFloat(display.value);
+            secondNumber = 0;
+            clearDisplay();
             break;
     }
+    setNumberFontSize();
 }
 
 /*
@@ -136,13 +133,4 @@ const numbers = document.querySelectorAll('.number');
 numbers.forEach(number => number.addEventListener('click', () => addNumber(number.innerHTML)));
 
 const operators = document.querySelectorAll('.operator');
-operators.forEach(operator => operator.addEventListener('click', () => checkOperator(operator.innerHTML)));
-
-const clear = document.querySelector('#clear');
-clear.addEventListener('click', clearAll);
-
-const decimal = document.querySelector('#decimal');
-decimal.addEventListener('click', addDecimal);
-
-const positiveNegativeButton = document.querySelector('#positive-negative');
-positiveNegativeButton.addEventListener('click', positiveNegative);
+operators.forEach(operator => operator.addEventListener('click', () => useOperator(operator.innerHTML)));
