@@ -20,9 +20,24 @@ const setFontSize = () => {
     }
 }
 
-
 const hasMaxLength = () => {
     if (display.innerHTML.length > 16) {
+        return true;
+    }
+
+    return false;
+}
+
+const isZero = () => {
+    if (display.innerHTML === '0' || display.innerHTML === 0) {
+        return true;
+    }
+
+    return false;
+}
+
+const isLastNumber = () => {
+    if (display.innerHTML.length === 1) {
         return true;
     }
 
@@ -32,7 +47,7 @@ const hasMaxLength = () => {
 const addNumber = (number) => {
     if (hasMaxLength()) return;
 
-    if (display.innerHTML === '0') {
+    if (isZero()) {
         display.innerHTML = number;
     } else {
         display.innerHTML += number;
@@ -48,7 +63,7 @@ const addDecimal = () => {
 }
 
 const positiveNegative = () => {
-    if (display.innerHTML !== '0') {
+    if (!isZero()) {
         display.innerHTML = display.innerHTML * -1;
     }
 }
@@ -133,7 +148,10 @@ const useOperator = (operator) => {
             clearAll();
             break;
         case 'B':
-            if (display.innerHTML !== "0") {
+            if (isZero()) return;
+            if (isLastNumber()) {
+                display.innerHTML = 0;
+            } else {
                 display.innerHTML = display.innerHTML.slice(0, -1);
             }
             break;
